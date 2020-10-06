@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            left: 0;
+        }
+        table{
+            border-collapse: collapse;
+            position: absolute;
+        }
+        td{
+           width: 49px;
+            height: 49px;
+        }
+        #map{
+            width: 500px;
+            height: 500px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+<!--用table创建地图-->
+<table border="1" cellpadding="0" >
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<div id="map"></div>
+    <script>
+        var map= document.getElementById("map")
+        var arr=[]//身体
+        function createDiv(color) {
+            //创建一个div节点
+            var div=document.createElement("div")
+            div.style.width="50px"
+            div.style.height="50px"
+            div.style.position="absolute"
+            div.style.top=parseInt(Math.random()*10)*50+"px"
+            div.style.left=parseInt(Math.random()*10)*50+"px"
+            div.style.backgroundColor=color;
+            map.appendChild(div)
+            return div;
+        }
+        var headNode =createDiv("red");//创建蛇头div
+        headNode.value="左"
+         // console.log(headNode.value)
+        var footNode =createDiv("blue");//创建食物div
+        // console.log(footNode)
+        //小蛇行走方法
+        function move() {
+            if (arr.length>0) {
+                for (var n =arr.length-1; n >=0; n--) {
+                    switch (arr[n].value) {
+                        case "左":
+                            // console.log(22222)
+                            arr[n].style.left = parseInt(arr[n].style.left) - 50 + "px"
+                            break
+                        case "右":
+                            arr[n].style.left = parseInt(arr[n].style.left) + 50 + "px"
+                            break
+                        case "上":
+                            arr[n].style.top = parseInt(arr[n].style.top) - 50 + "px"
+                            break
+                        case "下":
+                            arr[n].style.top = parseInt(arr[n].style.top) + 50 + "px"
+                            break
+                    }
+                    if (n == 0) {
+                        arr[n].value = headNode.value
+                    } else {
+                        arr[n].value = arr[n - 1].value
+                    }
+
+                }
+            }
+            switch (headNode.value) {
+                case "左":
+                    // console.log(22222)
+                    headNode.style.left=parseInt(headNode.style.left)-50+"px"
+                    break
+                case "右":
+                    headNode.style.left=parseInt(headNode.style.left)+50+"px"
+                    break
+                case "上":
+                    headNode.style.top=parseInt(headNode.style.top)-50+"px"
+                    break
+                case "下":
+                    headNode.style.top=parseInt(headNode.style.top)+50+"px"
+                    break
+            }
+            if (parseInt(headNode.style.left)<0||parseInt(headNode.style.left)>450||parseInt(headNode.style.top)<0||
+                parseInt(headNode.style.top)>450){
+                clearInterval(t)
+                alert("撞死了")
+                switch (headNode.value) {
+                    case "左":
+                        // console.log(22222)
+                        headNode.style.left=0+"px"
+                        break
+                    case "右":
+                        headNode.style.left=450+"px"
+                        break
+                    case "上":
+                        headNode.style.top=0+"px"
+                        break
+                    case "下":
+                        headNode.style.top=450+"px"
+                        break
+                }
+
+            }
+            if (arr.length>0){
+                for (var n=0;n<arr.length;n++){
+                    if (headNode.style.left==arr[n].style.left
+                        &&headNode.style.top==arr[n].style.top){
+                        alert("咬到身体了")
+                        clearInterval(t)
+                    }
+                }
+            }
+            if (headNode.style.left==footNode.style.left
+            &&headNode.style.top==footNode.style.top){
+                var bodyNode = createDiv("yellow")
+                var lastNode
+                if (arr.length>0){
+                    lastNode=arr[arr.length-1]
+                }else{
+                    lastNode=headNode
+                }
+                switch (lastNode.value) {
+                    case "左":
+                        bodyNode.style.left=parseInt(lastNode.style.left)+50+"px"
+                        bodyNode.style.top=lastNode.style.top
+                        break
+                    case "右":
+                        bodyNode.style.left=parseInt(lastNode.style.left)-50+"px"
+                        bodyNode.style.top=lastNode.style.top
+                        break
+                    case "上":
+                        bodyNode.style.top=parseInt(lastNode.style.top)+50+"px"
+                        bodyNode.style.left=lastNode.style.left
+                        break
+                    case "下":
+                        bodyNode.style.top=parseInt(lastNode.style.top)-50+"px"
+                        bodyNode.style.left=lastNode.style.left
+                        break
+                }
+                //将创建的div放在arr数组中
+                bodyNode.value=lastNode.value
+                arr.push(bodyNode)
+                //产生新的食物
+                //防止食物与蛇的身体重合
+                var px=parseInt(Math.random()*10)*50
+                var py = parseInt(Math.random()*10)*50
+                for (var n = 0;n<arr.length;n++){
+                    if (parseInt(lastNode.style.left)==px&&parseInt(lastNode.style.top)==py){
+                        px=parseInt(Math.random()*10)*50
+                        py=parseInt(Math.random()*10)*50
+                        n=-1
+                    }
+                }
+                footNode.style.top=px+"px"
+                footNode.style.left=py+"px"
+            }
+        }
+        var t=setInterval(move,300)
+        //通过键盘控制小蛇移动方向
+        document.onkeydown = function (e) {
+            switch (e.keyCode) {
+                case 37:
+                    if(headNode.value!="右"||arr.length==0){
+                        headNode.value="左"
+                    }
+                    break
+                case 38:
+                    if(headNode.value!="下"||arr.length==0){
+                        headNode.value="上"
+                    }
+                    break
+                case 39:
+                    if(headNode.value!="左"||arr.length==0){
+                        headNode.value="右"
+                    }
+                    break
+                case 40:
+                    if(headNode.value!="上"||arr.length==0){
+                        headNode.value="下"
+                    }
+                    break
+            }
+        }
+    </script>
+</body>
+</html>
